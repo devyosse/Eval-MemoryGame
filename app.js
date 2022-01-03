@@ -1,10 +1,12 @@
 let clickedCard = null;
 let preventClick = false;
+let score = 0;
+let scoreboard = document.getElementById("score");
 
 function onCardClicked(e) {
     const target = e.currentTarget;
 
-    if ( preventClick || target === clickedCard || target.className.includes('done')) {
+    if (  target === clickedCard || target.className.includes('done')) {
         return
     }
     target.className = target.className.replace('color-hidden', '').trim();
@@ -19,15 +21,20 @@ function onCardClicked(e) {
         preventClick = true;
         if (clickedCard.getAttribute('data-color') === target.getAttribute('data-color')) {
             preventClick = true;
+
             setTimeout(() =>{
                 clickedCard.className = clickedCard.className.replace('done', '').trim() + ' color-hidden';
                 target.className = target.className.replace('done', '').trim() + ' color-hidden';
                 clickedCard = null;
                 preventClick = false;
-            }, 500);
+                score++;
+                }, 500);
+            scoreboard = score;
         }
         else{
             clickedCard = null;
         }
     }
 }
+
+
